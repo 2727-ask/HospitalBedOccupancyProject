@@ -18,7 +18,15 @@ class HospitalFacilities(models.Model):
     fk = models.ForeignKey(to=Hospital,on_delete=models.CASCADE)
     name = models.CharField(max_length=500)
     desc = models.TextField()
-    img = models.ImageField()
 
     def __str__(self):
         return self.name
+
+class FacilityImages(models.Model):
+    fk = models.ForeignKey(to=HospitalFacilities, on_delete=models.CASCADE)
+    phrase = models.TextField()
+    img = models.ImageField()
+
+    def __str__(self):
+        return "Hello"
+

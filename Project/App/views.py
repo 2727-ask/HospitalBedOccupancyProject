@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Hospital
-from .serializers import HospitalSerializer
+from .models import Hospital,HospitalFacilities
+from .serializers import HospitalSerializer,HospitalFacilitiesSerializer
 
 class HospitalAPIView(APIView):
     def get(self, request,pk=None):
@@ -39,6 +39,25 @@ class HospitalAPIView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({"success": f"Hospital {saved_hospital.name} deleted successfully"})
+
+
+
+class HospitalFacilitiesAPIView(APIView):
+    def get(self,request,pk=None):
+        if (pk):
+            query = HospitalFacilities.objects.filter(id = pk)
+            serialize_data = HospitalFacilitiesSerializer(query, many=True)
+            return Response({"facilities": serialize_data.data})
+        query = HospitalFacilities.objects.all()
+        serialize_data = HospitalFacilitiesSerializer(query,many=True)
+        return Response({"facilities":serialize_data.data})
+
+    def post(self,request):
+        query = request.data.get("facility")
+        serialize = HospitalFacilitiesSerializer(data = query)
+        if serialize.is_valid(raise_exception=True):
+            serialize.save()
+        return Response({"status":True})
 
 
 
