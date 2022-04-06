@@ -40,3 +40,6 @@ class HospitalAPIView(APIView):
             serializer.save()
             return Response({"success": f"Hospital {saved_hospital.name} deleted successfully"})
 
+
+
+

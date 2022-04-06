@@ -14,3 +14,11 @@ class Hospital(models.Model):
     def __str__(self):
         return self.name
 
+class HospitalFacilities(models.Model):
+    fk = models.ForeignKey(to=Hospital,on_delete=models.CASCADE)
+    name = models.CharField(max_length=500)
+    desc = models.TextField()
+    img = models.ImageField()
+
+    def __str__(self):
+        return self.name
